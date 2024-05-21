@@ -1,6 +1,6 @@
-# Quokka-python
+# Quokka.io
 
-quokka is an API wrapper for Quokka SaaS Software written in Python. https://www.quokka.io/
+Quokka.io is an API wrapper for Quokka SaaS Software written in Python. https://www.quokka.io/
 
 This library uses API key authentication for requests.
 

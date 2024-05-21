@@ -13,7 +13,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         # List your package dependencies here
-        'Requests==2.0.0'
+        'Requests>=2.0.0'
     ],
     classifiers=[
         'Intended Audience :: Developers',

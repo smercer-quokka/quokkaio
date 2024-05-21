@@ -6,12 +6,12 @@ This library uses API key authentication for requests.
 
 ## Installing
 ```
-pip install quokka
+pip install quokkaio
 ```
 
 ## Usage
 ```
-from quokka.quokka import Quokka
+from quokkaio.quokka import Quokka
 
 quokka = Quokka(key=apiKey)
 ```
@@ -68,7 +68,7 @@ start_date, end_date - date to retrieve the results as python datetime
 We are always grateful for any kind of contribution including but not limited to bug reports, code enhancements, bug fixes, and even functionality suggestions.
 #### You can report any bug you find or suggest new functionality with a new [issue](https://github.com/generalgau/quokka-python/issues).
 #### If you want to add some functionality to the wrapper:
-1. Fork it ( https://github.com/generalgau/quokka-python )
+1. Fork it ( https://github.com/smercer-quokka/quokka-python )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Adds my new feature')
 4. Push to the branch (git push origin my-new-feature)

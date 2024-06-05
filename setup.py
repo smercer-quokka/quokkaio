@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='quokkaio',
-    version='0.1.2',
+    version='0.2.0',
     description='API wrapper for the Quokka security software',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -10,7 +10,7 @@ setup(
     author='Quokka.io',
     author_email='smercer@quokka.io',
     license='MIT',
-    packages=find_packages(),
+    packages=['quokkaio'],
     install_requires=[
         # List your package dependencies here
         'Requests>=2.20'

@@ -1,75 +1,133 @@
 # Quokka.io
 
-Quokka.io is an API wrapper for Quokka SaaS Software written in Python. https://www.quokka.io/
+This project provides a Python client for interacting with the Quokka API. The client allows users to perform various operations such as uploading files for scanning, retrieving scan results, downloading reports, and managing subgroups.
 
-This library uses API key authentication for requests.
+https://www.quokka.io/
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Initialization](#initialization)
+  - [Push Scan](#push-scan)
+  - [Get Subgroups](#get-subgroups)
+  - [Wait for Scan Completion](#wait-for-scan-completion)
+  - [Download PDF Report](#download-pdf-report)
+  - [Get App Issues](#get-app-issues)
+  - [Get Results](#get-results)
+  - [Get Submitted Apps](#get-submitted-apps)
+- [Logging](#logging)
+- [Contributing](#contributing)
+- [License](#license)
+
 
 ## Installing
+
+To install the Quokka API Client, use pip:
+
 ```
 pip install quokkaio
 ```
 
 ## Usage
-```
-from quokkaio.quokka import Quokka
 
-quokka = Quokka(key=apiKey)
-```
+### Initialization
 
-Get group ID from Sub Group Name
-```
-subgroupID = quokka.get_sub_groups(subGroupName)
+First, import the `Quokka` class and create an instance with your API key:
 
-subGroupName - The name of the Sub Group
-```
+```python
+from quokka import Quokka
 
-Upload an app with optional subgroup IDs
-```
-scan_response, platform = quokka.push_scan(theFile, subGroupList)
-
-theFile - the filename of the binary
-
-subGroupList - a python list of subgroup IDs
+api_key = "YOUR_API_KEY"
+quokka = Quokka(api_key)
 ```
 
-Download a PDF of the Quokka Analysis
-```
-quokka.download_pdf(uuid, platform)
+### Push Scan
 
-uuid - UUID of the Quokka analysis. Can be found from scan_response["uuid"]
+Upload an APK or IPA file for scanning:
 
-platform - "android" or "ios"
-```
-
-Retrieve app issues in JSON format
-```
-quokka.get_app_issue(uuid)
-
-uuid - UUID of the Quokka analysis. Can be found from scan_response["uuid"]
+```python
+the_file = "path/to/your/app.apk"
+subgroup_ids = ["subgroup1", "subgroup2"]
+response_data, platform = quokka.push_scan(the_file, subgroup_ids)
+print(response_data, platform)
 ```
 
-Retrieve analytics results in JSON format
-```
-quokka.get_results(start_date)
+### Get Subgroups
 
-start_date - date to retrieve the results as python datetime
+Retrieve a list of subgroups:
 
-Note: limitation on analytics API, can only do days from today, no end date
+```python
+quokka.get_sub_groups()
 ```
 
-Retrieve a list of submitted apps in JSON format
-```
-quokka.get_apps(start_date, end_date)
+Retrieve a specific subgroup ID by name:
 
-start_date, end_date - date to retrieve the results as python datetime
+```python
+subgroup_id = quokka.get_sub_groups(the_group="specific_group_name")
+print(subgroup_id)
 ```
+
+### Wait for Scan Completion
+
+Wait for a scan to complete:
+
+```python
+uuid = "scan_uuid"
+quokka.wait_for_scan_complete(uuid, maxWaitTime=30)  # maxWaitTime in minutes
+```
+
+### Download PDF Report
+
+Download the scan results as a PDF file:
+
+```python
+uuid = "scan_uuid"
+quokka.download_pdf(uuid)
+```
+
+### Get App Issues
+
+Retrieve app issues in JSON format:
+
+```python
+uuid = "scan_uuid"
+issues = quokka.get_app_issue(uuid)
+print(issues)
+```
+
+### Get Results
+
+Retrieve specified results in JSON format from a start date:
+
+```python
+from datetime import datetime
+
+start_date = datetime(2023, 1, 1)
+results = quokka.get_results(start_date)
+print(results)
+```
+
+### Get Submitted Apps
+
+Retrieve submitted apps within a date range:
+
+```python
+from datetime import datetime
+
+start_date = datetime(2023, 1, 1)
+end_date = datetime(2023, 6, 1)
+apps = quokka.get_apps(start_date, end_date)
+print(apps)
+```
+
+## Logging
+
+This client uses Python's built-in logging module to provide debug information. By default, logging is set to the DEBUG level. You can configure the logging level and format as needed.
 
 ## Contributing
-We are always grateful for any kind of contribution including but not limited to bug reports, code enhancements, bug fixes, and even functionality suggestions.
-#### You can report any bug you find or suggest new functionality with a new [issue](https://github.com/generalgau/quokka-python/issues).
-#### If you want to add some functionality to the wrapper:
-1. Fork it ( https://github.com/smercer-quokka/quokka-python )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Adds my new feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create a new Pull Request
+
+If you want to contribute to this project, please fork the repository and create a pull request with your changes. Make sure to write tests and documentation for new features or modifications.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

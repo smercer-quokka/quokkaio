@@ -4,8 +4,9 @@ from datetime import datetime
 import logging
 
 # Configure logging once at the module level
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("Quokka")
+logger.setLevel(level=logging.DEBUG)
+
 
 def api_call(url, method='get', params=None, headers=None, timeout=30, files=None):
     """

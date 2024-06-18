@@ -222,7 +222,7 @@ class Quokka:
         response = api_call(url, method='get', params=params)
         return response.text if response else None
     
-    def get_users(self, isCompressed=False):
+    def get_users(self, isCompressed='false'):
         """
         Users can request that the file is sent as either a CSV or as a compressed file. 
 
@@ -230,7 +230,7 @@ class Quokka:
             isCompressed (boolean): Determines whether to send a compressed file
 
         Returns:
-            bool: True if file is successfully saved, False otherwise.
+            string: true if file is successfully saved, false otherwise.
         """
         url = "https://api.kryptowire.com/group-admin/users-csv"
         now = datetime.now()
@@ -263,12 +263,12 @@ class Quokka:
             logger.error(f"Error: {response}")
             return False
         
-    def get_auditLogs(self, startDate, endDate, isCompressed=False, pageType='audit'):
+    def get_auditLogs(self, startDate, endDate, isCompressed='false', pageType='audit'):
         """
         Users can request the Audit Log CSV which will be processed in the background.
 
         Args:
-            isCompressed (boolean): Determines whether to send a compressed file
+            isCompressed (str): Determines whether to send a compressed file
             pageType (str): The type of CSV requested. For audit log data users should request "audit"
             start_date (datetime): The start date for retrieving results.
             end_date (datetime): The end date for retrieving results.

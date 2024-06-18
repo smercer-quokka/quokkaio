@@ -242,14 +242,14 @@ class Quokka:
         response = api_call(url, method='get', params=params)
         if response:
             content_type = response.headers.get('Content-Type')
-            if 'text/csv' in content_type:
+            if isCompressed == 'false':
                 # Handle CSV file
                 file_path = f'{date_string}-group_user_data.csv'
                 with open(file_path, 'w') as file:
                     file.write(response.text)
                 logger.info(f"CSV file has been saved as {file_path}")
                 return True
-            elif 'application/zip' in content_type:
+            elif isCompressed == 'true':
                 # Handle compressed file
                 file_path = f'{date_string}-group_user_data.zip'
                 with open(file_path, 'wb') as file:

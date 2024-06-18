@@ -120,6 +120,33 @@ apps = quokka.get_apps(start_date, end_date)
 print(apps)
 ```
 
+### Get Users
+
+Retrieve the Group User data in either CSV or compressed file format:
+
+```python
+is_compressed = False  
+quokka.get_users(isCompressed=is_compressed)
+```
+
+*isCompressed is optional and defaults to False*
+
+### Get Audit Logs
+Request the Audit Log CSV which will be processed in the background. Users can request that the file is sent as either a CSV or as a compressed file. The request also allows users to select a specific date range for the audit log data. When the file is ready, the requesting user will receive an email with a download link.
+
+```python
+start_date = "2023-01-01"
+end_date = "2023-06-01"
+is_compressed = False  # Set to True if you want the file to be compressed
+result = quokka.get_auditLogs(startDate=start_date, endDate=end_date, isCompressed=is_compressed)
+```
+<ul>
+<li>startDate (str): The start date for retrieving results in the format “YYYY-MM-DD”.</li>
+<li>endDate (str): The end date for retrieving results in the format “YYYY-MM-DD”.</li>
+<li>isCompressed (bool): Determines whether to send a compressed file. Default is False.</li>
+<li>pageType (str): The type of CSV requested. For audit log data, users should request “audit”. Default is "audit".</li>
+</ul>
+
 ## Logging
 
 This client uses Python's built-in logging module to provide debug information. By default, logging is set to the DEBUG level. You can configure the logging level and format as needed.

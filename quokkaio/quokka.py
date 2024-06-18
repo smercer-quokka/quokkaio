@@ -221,3 +221,73 @@ class Quokka:
         }
         response = api_call(url, method='get', params=params)
         return response.text if response else None
+    
+    def get_users(self, isCompressed=False):
+        """
+        Users can request that the file is sent as either a CSV or as a compressed file. 
+
+        Args:
+            isCompressed (boolean): Determines whether to send a compressed file
+
+        Returns:
+            bool: True if file is successfully saved, False otherwise.
+        """
+        url = "https://api.kryptowire.com/api/group-admin/users-csv"
+        now = datetime.now()
+        date_string = now.strftime("%Y-%m-%d")
+        params = {
+            'key': self.api_key,
+            'isCompressed': isCompressed
+        }
+        response = api_call(url, method='get', params=params)
+        if response:
+            content_type = response.headers.get('Content-Type')
+            if 'text/csv' in content_type:
+                # Handle CSV file
+                file_path = f'{date_string}-group_user_data.csv'
+                with open(file_path, 'w') as file:
+                    file.write(response.text)
+                logger.info(f"CSV file has been saved as {file_path}")
+                return True
+            elif 'application/zip' in content_type:
+                # Handle compressed file
+                file_path = f'{date_string}-group_user_data.zip'
+                with open(file_path, 'wb') as file:
+                    file.write(response.content)
+                logger.info(f"Compressed file has been saved as {file_path}")
+                return True
+            else:
+                logger.error(f"Unknown Content Error: {content_type}")
+                return False
+        else:
+            logger.error(f"Error: {response}")
+            return False
+        
+    def get_auditLogs(self, startDate, endDate, isCompressed=False, pageType='audit'):
+        """
+        Users can request the Audit Log CSV which will be processed in the background.
+
+        Args:
+            isCompressed (boolean): Determines whether to send a compressed file
+            pageType (str): The type of CSV requested. For audit log data users should request "audit"
+            start_date (datetime): The start date for retrieving results.
+            end_date (datetime): The end date for retrieving results.
+
+        Returns:
+            bool: True if file is successfully saved, False otherwise.
+        """
+        url = "https://api.kryptowire.com/api/csv-request"
+        params = {
+            'key': self.api_key,
+            'isCompressed': isCompressed,
+            'pageType': pageType,
+            'startDate': startDate,
+            'endDate': endDate
+        }
+        response = api_call(url, method='post', params=params)
+        if response:
+            logger.info("Email will be sent with download link")
+            return True 
+        else:
+            logger.error("Issue retrieving audit results") 
+            return False

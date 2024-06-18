@@ -232,7 +232,7 @@ class Quokka:
         Returns:
             bool: True if file is successfully saved, False otherwise.
         """
-        url = "https://api.kryptowire.com/api/group-admin/users-csv"
+        url = "https://api.kryptowire.com/group-admin/users-csv"
         now = datetime.now()
         date_string = now.strftime("%Y-%m-%d")
         params = {
@@ -276,7 +276,7 @@ class Quokka:
         Returns:
             bool: True if file is successfully saved, False otherwise.
         """
-        url = "https://api.kryptowire.com/api/csv-request"
+        url = "https://api.kryptowire.com/csv-request"
         params = {
             'key': self.api_key,
             'isCompressed': isCompressed,

@@ -171,6 +171,22 @@ class Quokka:
                 pdf.write(response.content)
             logger.info(f"File pdf{uuid}.pdf downloaded")
 
+    def get_sarif(self, uuid):
+        """
+        Downloads the scan results as a PDF file.
+
+        Args:
+            uuid (str): The unique ID of the scan.
+
+        Returns:
+            None
+        """
+        params = {'key': self.api_key, 'uuid': uuid}
+        url = 'https://api.kryptowire.com/api/results/sarif'
+        response = api_call(url, method='get', params=params)
+
+        return response.text if response else None
+
     def get_app_issue(self, uuid):
         """
         Retrieves app issues in JSON format.
